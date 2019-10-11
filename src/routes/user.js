@@ -27,4 +27,21 @@ router.post('/', async (req, res) => {
 
 });
 
+// delete one user ...
+router.delete('/:id', async (req, res) => {
+
+    try {
+        const result = await User.deleteOne({_id: req.params.id}).exec();
+
+        if( result.deletedCount > 0 )
+            res.status(200).send({success: true, data: result });
+        else
+            res.status(400).send({success: false, data: "usuário não encontrado"});
+
+    } catch {
+        res.status(500).send(err);
+    }
+});
+
+
 module.exports = router;
