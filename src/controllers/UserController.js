@@ -31,7 +31,7 @@ async function saveOne (req, res) {
 
 async function deleteOne (req, res) {
     try {
-        const result = await UserModel.deleteOne({_id: req.params.id}).exec();
+        const result = await UserModel.deleteOne({_id: res.locals._user_}).exec();
 
         if( result.deletedCount > 0 )
             res.status(200).send({success: true, data: result });
