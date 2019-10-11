@@ -1,47 +1,13 @@
 const router = require('express').Router();
-const User = require('../models/User');
+const md_teste_middlewares = require('../middlewares/md_teste');
+const UserController = require('../controllers/UserController');
 
 
 // get all users ...
-router.get('/', async (req, res) => {
-
-    User.find({}, (err, data) => {
-        if(err) {
-            res.status(200).send(err);
-            next();
-        }
-        return res.status(200).json(data);
-    });
-
-});
-
+router.get('/', UserController.get);
 // save one user ...
-router.post('/', async (req, res) => {
-
-    try {
-        const user = await User.create(req.body);
-        return res.status(201).send({ user });
-    } catch (err) {
-        return res.status(400).send({ error: 'Error ao registrar usuário'});
-    }
-
-});
-
+router.post('/', UserController.post);
 // delete one user ...
-router.delete('/:id', async (req, res) => {
-
-    try {
-        const result = await User.deleteOne({_id: req.params.id}).exec();
-
-        if( result.deletedCount > 0 )
-            res.status(200).send({success: true, data: result });
-        else
-            res.status(400).send({success: false, data: "usuário não encontrado"});
-
-    } catch {
-        res.status(500).send(err);
-    }
-});
-
+router.delete('/:id', md_teste_middlewares, UserController.delete);
 
 module.exports = router;
