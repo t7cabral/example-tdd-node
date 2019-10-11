@@ -1,24 +1,12 @@
 require('dotenv').config();
 const app = require('express')();
+const bodyParser = require('body-parser');
+const routerUser = require('./routes/user');
 
 
-app.get('/user', (req, res) => {
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-    const data = [
-        {
-            name: 'Thiago Cabral',
-            email: 'thiago@gmail.com',
-            office: 'full stack Javascript development',
-        },
-        {
-            name: 'Rogerio M.',
-            email: 'rogerio@gmail.com',
-            office: 'full stack Javascript'
-        }
-    ]
-
-    res.status(200)
-        .json(data);
-});
+app.use('/user', routerUser);
 
 module.exports = app;
