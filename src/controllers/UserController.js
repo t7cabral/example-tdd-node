@@ -5,9 +5,9 @@ const UserModel = require('../models/User');
 module.exports = {
     get: getAll,
     post: saveOne,
+    update: updateOne,
     delete: deleteOne,
 }
-
 
 async function getAll (req, res) {
 
@@ -29,6 +29,29 @@ async function saveOne (req, res) {
     }
 }
 
+async function updateOne (req, res) {
+
+    try {
+        const result = await UserModel.findByIdAndUpdate( 
+            req.params.id,
+            { $set: req.body }, 
+            { new: true }
+        );
+
+        return res.status(200).json({
+            success: true,
+            data: result
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            sucess: false,
+            error: err
+        });
+    }
+
+}
+
 async function deleteOne (req, res) {
     try {
         const result = await UserModel.deleteOne({_id: res.locals._user_}).exec();
@@ -38,7 +61,7 @@ async function deleteOne (req, res) {
         else
             res.status(400).send({success: false, data: "usuário não encontrado"});
 
-    } catch {
+    } catch (err) {
         res.status(500).send(err);
     }
 }

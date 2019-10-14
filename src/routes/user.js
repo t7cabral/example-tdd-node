@@ -10,6 +10,9 @@ router.get('/', UserController.get);
 // save one user ...
 router.post('/', UserController.post);
 
+// update one user ...
+router.put('/:id', UserController.update);
+
 // delete one user ...
 router.delete('/:id',
     load_user_middleware,
