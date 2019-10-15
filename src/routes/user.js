@@ -1,8 +1,9 @@
 const router = require('express').Router();
+
+const UserController = require('../controllers/User');
 const console_log_middleware = require('../middlewares/console_log');
 const validate_token_middleware = require('../middlewares/validate_token');
 const load_user_middleware = require('../middlewares/load_user');
-const UserController = require('../controllers/UserController');
 
 
 // middleware de verificação de token
